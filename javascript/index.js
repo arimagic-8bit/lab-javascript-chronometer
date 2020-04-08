@@ -42,40 +42,53 @@ function printMilliseconds() {
 }
 
 function printSplit() {
-  // ... your code goes here
+  let newTimesLi = document.createElement("li");
+  newTimesLi.innerHTML = `${minDec.innerHTML}${minUni.innerHTML}:${secDec.innerHTML}${secUni.innerHTML}:${milDec.innerHTML}${milUni.innerHTML}`;
+  splits.appendChild(newTimesLi);
 }
 
 function clearSplits() {
-  // ... your code goes here
+  let removeLi = document.querySelectorAll("li");
+  removeLi.forEach((li) => {
+    li.remove();
+  });
 }
 
 function setStopBtn() {
-  // ... your code goes here
+  btnLeft.innerHTML = "START";
+  btnRight.innerHTML = "RESET";
+  chronometer.stopClick();
 }
 
 function setSplitBtn() {
-  // ... your code goes here
+  chronometer.splitClick();
+  printSplit();
 }
 
 function setStartBtn() {
-  // ... your code goes here
+  btnLeft.innerHTML = "STOP";
+  btnRight.innerHTML = "SPLIT";
+  chronometer.startClick(printTime);
 }
 
 function setResetBtn() {
-  // ... your code goes here
+  chronometer.resetClick();
+  minDec.innerHTML = 0;
+  minUni.innerHTML = 0;
+  secDec.innerHTML = 0;
+  secUni.innerHTML = 0;
+  milUni.innerHTML = 0;
+  milDec.innerHTML = 0;
+  clearSplits();
 }
 
 // Start/Stop Button
 btnLeft.addEventListener("click", () => {
   btnLeft.classList.toggle("stop");
   if (btnLeft.innerHTML === "START") {
-    btnLeft.innerHTML = "STOP";
-    btnRight.innerHTML = "SPLIT";
-    chronometer.startClick(printTime);
+    setStartBtn();
   } else {
-    btnLeft.innerHTML = "START";
-    btnRight.innerHTML = "RESET";
-    chronometer.stopClick();
+    setStopBtn();
   }
 });
 
@@ -83,21 +96,8 @@ btnLeft.addEventListener("click", () => {
 btnRight.addEventListener("click", () => {
   btnRight.classList.toggle("split");
   if (btnRight.innerHTML === "SPLIT") {
-    chronometer.splitClick();
-    let newTimesLi = document.createElement("li");
-    newTimesLi.innerHTML = `${minDec.innerHTML}${minUni.innerHTML}:${secDec.innerHTML}${secUni.innerHTML}:${milDec.innerHTML}${milUni.innerHTML}`;
-    splits.appendChild(newTimesLi);
+    setSplitBtn();
   } else {
-    chronometer.resetClick();
-    minDec.innerHTML = 0;
-    minUni.innerHTML = 0;
-    secDec.innerHTML = 0;
-    secUni.innerHTML = 0;
-    milUni.innerHTML = 0;
-    milDec.innerHTML = 0;
-    let removeLi = document.querySelectorAll("li");
-    removeLi.forEach((li) => {
-      li.remove();
-    });
+    setResetBtn();
   }
 });
